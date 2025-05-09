@@ -52,13 +52,14 @@ internal class ApiFunctions(
                     "StatusCode : ${response.body()?.statusCode}\nMessage : ${response.body()?.message}"
                 )
                 DataStoreManager.saveSupportedLanguages(response.body()?.data!!)
-                DataStoreManager.getCurrentLanguage()?.let{
-                }?:run{
+                DataStoreManager.getCurrentLanguage()?.let {
+                } ?: run {
                     val systemLanguage: UserLanguage =
                         VerblazeBase.appContext.currentLocale().toLocaleInfo()
                     val currentLanguage: UserLanguage =
                         response.body()?.data?.supportedLanguages?.find { it.code == systemLanguage.code }
                             ?: response.body()?.data?.baseLanguage!!
+                    println("apifunctions setsupportedlanguages çalışıyor ve ekleniyor : $currentLanguage")
                     DataStoreManager.saveCurrentLanguage(currentLanguage)
                 }
 
@@ -71,11 +72,15 @@ internal class ApiFunctions(
                 Log.e("Err_supportedLanguages", "${HttpException(response).localizedMessage}")
             }
         } catch (e: Exception) {
-            Log.e("setSupportedLanguages","${e.localizedMessage}")
+            Log.e("setSupportedLanguages", "${e.localizedMessage}")
         }
     }
 
-    suspend fun setMultipleTranslations(apiKey: String, codeList: List<String>,currentLanguage:UserLanguage) {
+    suspend fun setMultipleTranslations(
+        apiKey: String,
+        codeList: List<String>,
+        currentLanguage: UserLanguage
+    ) {
         try {
             val response = apiClient.fetchMultipleTranslations(
                 apiKey,
@@ -87,13 +92,14 @@ internal class ApiFunctions(
                     "StatusCode : ${response.body()?.statusCode}\nMessage : ${response.body()?.message}"
                 )
                 DataStoreManager.saveWholeTranslations(response.body()?.data!!)
-                val currentTranslations :List<TranslationFile> = response.body()?.data?.translations?.get(currentLanguage.code)!!
+                val currentTranslations: List<TranslationFile> =
+                    response.body()?.data?.translations?.get(currentLanguage.code)!!
                 DataStoreManager.saveCurrentTranslations(currentTranslations)
             } else {
                 Log.e("Err_multipleTranslations", "${HttpException(response).localizedMessage}")
             }
         } catch (e: Exception) {
-            Log.e("setMultipleTranslations","${e.localizedMessage}")
+            Log.e("setMultipleTranslations", "${e.localizedMessage}")
         }
     }
 }

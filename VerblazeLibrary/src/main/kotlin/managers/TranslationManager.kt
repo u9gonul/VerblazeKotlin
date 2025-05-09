@@ -34,7 +34,7 @@ internal object TranslationManager {
             currentTranslations.value =
                 wholeTranslations.value?.translations?.get(newLanguage)!!
         } catch (e: Exception) {
-            Log.e("FupdateCurrentTranslations", "${e.localizedMessage}")
+            Log.e("updateCurrentTranslations", "${e.localizedMessage}")
         }
         println("updating biter")
     }

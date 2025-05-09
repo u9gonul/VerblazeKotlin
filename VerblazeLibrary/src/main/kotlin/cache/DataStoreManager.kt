@@ -39,7 +39,7 @@ internal object DataStoreManager {
             VerblazeBase.appContext.dataStore.data.map { it[KEY_SUPPORTEDLANGUAGES] }.first()
 
         return dataString?.let { Json.decodeFromString(serializer, it) } ?: run {
-            Log.e("getCurrentTranslations","NullPointerException : CurrentTranslations is null")
+            Log.e("getSupportedLanguages","NullPointerException : CurrentTranslations is null")
             SupportedLanguagesData(UserLanguage("","",""),emptyList())
         }
     }
@@ -74,8 +74,9 @@ internal object DataStoreManager {
         val serializer = UserLanguage.serializer()
         val dataString =
             VerblazeBase.appContext.dataStore.data.map { it[KEY_CURRENT_LANGUAGE] }.first()
+        println("dataString in DSM : ${dataString}")
         return dataString?.let { Json.decodeFromString(serializer, it) } ?: run {
-            Log.e("getCurrentTranslations","NullPointerException : CurrentTranslations is null")
+            Log.e("getCurrentLanguage","NullPointerException : CurrentTranslations is null")
             UserLanguage("","","")
         }
     }
