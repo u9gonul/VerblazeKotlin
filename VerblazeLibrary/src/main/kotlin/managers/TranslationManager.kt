@@ -14,6 +14,7 @@ internal object TranslationManager {
         MutableStateFlow(DataStoreManager.getCurrentLanguage()!!)
     }
     private val currentTranslations: MutableStateFlow<List<TranslationFile>> = runBlocking {
+        println("runBlocking in the TranslationManager currentTranslations")
         MutableStateFlow<List<TranslationFile>>(DataStoreManager.getCurrentTranslations())
     }
     private val wholeTranslations: MutableStateFlow<MultipleTranslations?> =

@@ -93,6 +93,7 @@ internal object DataStoreManager {
         val serializer = ListSerializer(TranslationFile.serializer())
         val dataString =
             VerblazeBase.appContext.dataStore.data.map { it[KEY_CURRENT_TRANSLATIONS] }.first()
+        println("inDSM getCurrentTranslations : $dataString")
         return dataString?.let {
             Json.decodeFromString(serializer, it)
         } ?: run {

@@ -48,7 +48,7 @@ internal class ApiFunctions(
             val response = apiClient.fetchSupportedLanguages(apiKey)
             if (response.isSuccessful) {
                 Log.e(
-                    "checkVersion",
+                    "setSupportedLanguages",
                     "StatusCode : ${response.body()?.statusCode}\nMessage : ${response.body()?.message}"
                 )
                 DataStoreManager.saveSupportedLanguages(response.body()?.data!!)
@@ -88,7 +88,7 @@ internal class ApiFunctions(
             )
             if (response.isSuccessful) {
                 Log.e(
-                    "checkVersion",
+                    "setMultipleTranslations",
                     "StatusCode : ${response.body()?.statusCode}\nMessage : ${response.body()?.message}"
                 )
                 DataStoreManager.saveWholeTranslations(response.body()?.data!!)
