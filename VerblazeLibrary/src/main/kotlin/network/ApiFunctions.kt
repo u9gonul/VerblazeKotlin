@@ -52,8 +52,7 @@ internal class ApiFunctions(
                     "StatusCode : ${response.body()?.statusCode}\nMessage : ${response.body()?.message}"
                 )
                 DataStoreManager.saveSupportedLanguages(response.body()?.data!!)
-                DataStoreManager.getCurrentLanguage()?.let {
-                } ?: run {
+                if(DataStoreManager.getCurrentLanguage()==null){
                     val systemLanguage: UserLanguage =
                         VerblazeBase.appContext.currentLocale().toLocaleInfo()
                     val currentLanguage: UserLanguage =
@@ -61,7 +60,19 @@ internal class ApiFunctions(
                             ?: response.body()?.data?.baseLanguage!!
                     println("apifunctions setsupportedlanguages çalışıyor ve ekleniyor : $currentLanguage")
                     DataStoreManager.saveCurrentLanguage(currentLanguage)
+                }else{
+                    println("apiFunctions/setSupportedLanguages : getcurrentlanguages null deil")
                 }
+//                DataStoreManager.getCurrentLanguage()?.let {
+//                } ?: run {
+//                    val systemLanguage: UserLanguage =
+//                        VerblazeBase.appContext.currentLocale().toLocaleInfo()
+//                    val currentLanguage: UserLanguage =
+//                        response.body()?.data?.supportedLanguages?.find { it.code == systemLanguage.code }
+//                            ?: response.body()?.data?.baseLanguage!!
+//                    println("apifunctions setsupportedlanguages çalışıyor ve ekleniyor : $currentLanguage")
+//                    DataStoreManager.saveCurrentLanguage(currentLanguage)
+//                }
 
                 setMultipleTranslations(
                     apiKey,
